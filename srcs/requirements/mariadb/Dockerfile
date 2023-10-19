@@ -10,14 +10,11 @@ RUN apt clean autoclean
 RUN apt install -y mariadb-server
 
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-# TODO check if this line is necessary: socket=/run/mysqld/mysqld.sock
 
 ARG SQL_DATABASE_NAME
 ARG SQL_USER_NAME
 ARG SQL_USER_PASSWORD
 ARG SQL_ROOT_PASSWORD
-
-#RUN echo mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown ; false
 
 RUN service mariadb start \
     && mysql -e "CREATE DATABASE IF NOT EXISTS $SQL_DATABASE_NAME; \
