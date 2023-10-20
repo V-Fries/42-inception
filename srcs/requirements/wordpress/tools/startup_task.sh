@@ -1,12 +1,16 @@
 #! /bin/bash
 
 if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
-    sleep 10 # Find another way to wait for mariadb to be ready
-
     >&2 echo Downloading wordpress
     wp core download --allow-root \
                      --path=/var/www/wordpress \
         || (>&2 echo Error downloading wordpress; exit 1)
+
+    sleep 10
+#    >&2 echo Waiting for mariadb to be ready
+#    until mysql -h $SQL_DATABASE_NAME -u $SQL_USER_NAME -p$SQL_USER_PASSWORD -e ";" &>/dev/null; do
+#        sleep 1
+#    done
 
     >&2 echo Configuring wordpress
     wp config create --allow-root \
@@ -29,6 +33,7 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
 
     >&2 echo Creating new wordpress user
     wp user create $WORDPRESS_USER_NAME $WORDPRESS_USER_EMAIL --allow-root \
+                                                              --user_pass="$WORDPRESS_USER_PASSWORD" \
                                                               --path=/var/www/wordpress \
         || (>&2 echo Error creating new wordpress user; exit 4)
 
@@ -38,4 +43,4 @@ else
 fi
 
 mkdir -p /run/php
-php-fpm7.3 -F || (>&2 echo Error running php-fpm; exit 5)
+php-fpm7.4 -F || (>&2 echo Error running php-fpm; exit 5)
