@@ -26,4 +26,4 @@ RUN service mariadb start \
 
 EXPOSE 3306
 
-CMD ["mysqld_safe"]
+CMD ["mysqld"]

@@ -9,8 +9,11 @@ PATH_NGINX = $(REQUIREMENTS)nginx
 PATH_MARIADB = $(REQUIREMENTS)mariadb
 PATH_WORDPRESS = $(REQUIREMENTS)wordpress
 
+include srcs/.env
+
 .PHONY: all
 all:
+	@mkdir -p $(WORDPRESS_VOLUME) && mkdir -p $(MARIADB_VOLUME)
 	docker-compose -f srcs/docker-compose.yml up -d --build
 
 .PHONY: stop
@@ -21,9 +24,14 @@ stop:
 clean: stop
 	docker-compose -f srcs/docker-compose.yml down -v
 
-#.PHONY: fclean
+.PHONY: fclean
 fclean: clean
-#	docker system prune -af
+	rm -rf $(WORDPRESS_VOLUME)
+	rm -rf $(MARIADB_VOLUME)
+
+.PHONY: prune
+prune:
+	docker system prune -af
 
 .PHONY: re
 re: fclean
