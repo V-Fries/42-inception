@@ -24,11 +24,11 @@ prune:
 re: clean
 	$(MAKE) all
 
-.PHONY: deleteDB
-deleteDB: clean
+.PHONY: deletePersistentData
+deletePersistentData: clean
 	rm -rf $(WORDPRESS_VOLUME)
 	rm -rf $(MARIADB_VOLUME)
 
-.PHONY: reDeleteDB
-reDeleteDB: deleteDB
+.PHONY: reDeletePersistentData
+reDeletePersistentData: deletePersistentData
 	$(MAKE) all

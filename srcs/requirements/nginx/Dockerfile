@@ -21,6 +21,4 @@ RUN openssl req -x509 \
 # nginx config
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 443
-
 CMD ["nginx"]

@@ -22,6 +22,3 @@ COPY tools/startup_task.sh /tools/startup_task.sh
 RUN chmod +x /tools/startup_task.sh
 
 CMD ["/tools/startup_task.sh"]
-
-EXPOSE 9000
-EXPOSE 3306

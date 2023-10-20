@@ -7,10 +7,6 @@ if [ ! -f "/var/www/wordpress/wp-config.php" ]; then
         || (>&2 echo Error downloading wordpress; exit 1)
 
     sleep 10
-#    >&2 echo Waiting for mariadb to be ready
-#    until mysql -h $SQL_DATABASE_NAME -u $SQL_USER_NAME -p$SQL_USER_PASSWORD -e ";" &>/dev/null; do
-#        sleep 1
-#    done
 
     >&2 echo Configuring wordpress
     wp config create --allow-root \
