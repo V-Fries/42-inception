@@ -6,15 +6,15 @@ DOCKER_COMPOSE_PATH = srcs/docker-compose.yml
 all:
 	mkdir -p $(WORDPRESS_VOLUME)
 	mkdir -p $(MARIADB_VOLUME)
-	docker-compose -f $(DOCKER_COMPOSE_PATH) up -d --build
+	docker compose -f $(DOCKER_COMPOSE_PATH) up -d --build
 
 .PHONY: stop
 stop:
-	docker-compose -f $(DOCKER_COMPOSE_PATH) stop
+	docker compose -f $(DOCKER_COMPOSE_PATH) stop
 
 .PHONY: clean
 clean: stop
-	docker-compose -f $(DOCKER_COMPOSE_PATH) down -v
+	docker compose -f $(DOCKER_COMPOSE_PATH) down -v
 
 .PHONY: prune
 prune:
